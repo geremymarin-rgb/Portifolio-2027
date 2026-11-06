@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
+  <title>Portfólio 2027 | Chainsaw Man</title>
+
+  <style>
+    :root {
+      --bg: #101010;
+      --panel: #1a1a1a;
+      --panel-2: #222;
+      --red: #d71920;
+      --red-dark: #8f1016;
+      --cream: #f2eee7;
+      --muted: #aaa39b;
+      --line: rgba(255,255,255,.12);
+      --green: #70c48a;
+      --yellow: #f0c45a;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(215,25,32,.18), transparent 35%),
+        linear-gradient(135deg, #111 0%, #171717 55%, #0c0c0c 100%);
+      color: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px clamp(18px, 5vw, 64px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(10,10,10,.82);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 14px;
+    }
+
+    .brand span { color: var(--red); }
+
+    .year {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      width: min(1120px, 90%);
+      margin: auto;
+    }
+
+    .hero {
+      min-height: 390px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 32px;
+      padding: 64px 0 48px;
+    }
+
+    .eyebrow {
+      color: #ff555b;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    h1 {
+      margin: 12px 0;
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: .88;
+      letter-spacing: -5px;
+      text-transform: uppercase;
+      font-weight: 1000;
+    }
+
+    h1 span {
+      color: var(--red);
+      display: block;
+    }
+
+    .hero p {
+      color: #c4bdb5;
+      line-height: 1.7;
+      max-width: 540px;
+    }
+
+    .hero-art {
+      min-height: 270px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(215,25,32,.5);
+      background: repeating-linear-gradient(
+        135deg, #1d1d1d 0 12px, #181818 12px 24px
+      );
+      clip-path: polygon(7% 0,100% 0,93% 100%,0 93%);
+    }
+
+    .hero-art::before {
+      content: "デンジ";
+      position: absolute;
+      font-size: clamp(76px, 12vw, 140px);
+      font-weight: 900;
+      color: rgba(215,25,32,.16);
+      transform: rotate(-12deg);
+    }
+
+    .chainsaw-mark {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(70px, 10vw, 120px);
+      font-weight: 1000;
+      color: var(--cream);
+      text-shadow: 7px 7px 0 var(--red);
+      transform: rotate(-8deg);
+      letter-spacing: -8px;
+    }
+
+    .hero-art small {
+      position: absolute;
+      bottom: 22px;
+      right: 24px;
+      color: #eee;
+      letter-spacing: 3px;
+      font-weight: bold;
+      font-size: 10px;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 34px);
+      text-transform: uppercase;
+    }
+
+    h2 span { color: var(--red); }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 4px 0 38px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 18px;
+      border-left: 3px solid var(--red);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .toolbar input, .toolbar select {
+      flex: 1 1 180px;
+      min-width: 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--cream);
+      padding: 12px 13px;
+      border-radius: 4px;
+    }
+
+    .btn {
+      border: 0;
+      padding: 12px 17px;
+      background: var(--red);
+      color: white;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      border-radius: 3px;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      background: #f02a32;
+      transform: translateY(-1px);
+    }
+
+    .btn.secondary {
+      background: #333;
+      border: 1px solid var(--line);
+    }
+
+    .btn.secondary:hover { background: #444; }
+
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 70px;
+    }
+
+    .exercise {
+      background: linear-gradient(145deg, #202020, #171717);
+      border: 1px solid var(--line);
+      padding: 18px;
+      position: relative;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .exercise::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--red);
+    }
+
+    .exercise-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .exercise h3 {
+      margin: 0 0 9px;
+      font-size: 18px;
+    }
+
+    .exercise p {
+      color: #b8b1aa;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0 0 14px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: auto;
+    }
+
+    .status {
+      white-space: nowrap;
+      border-radius: 20px;
+      padding: 5px 8px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: rgba(240,196,90,.13);
+      color: var(--yellow);
+    }
+
+    .status.corrected {
+      background: rgba(112,196,138,.13);
+      color: var(--green);
+    }
+
+    .status.improve {
+      background: rgba(215,25,32,.15);
+      color: #ff777c;
+    }
+
+    .exercise-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .mini-btn {
+      background: #303030;
+      border: 1px solid var(--line);
+      color: #eee;
+      padding: 7px 9px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+
+    .mini-btn:hover { background: #444; }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 38px 20px;
+      text-align: center;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 24px 5%;
+      text-align: center;
+      color: #777;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 10;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      width: min(520px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      background: #1c1c1c;
+      border: 1px solid rgba(215,25,32,.55);
+      padding: 24px;
+      box-shadow: 0 20px 80px #000;
+    }
+
+    .modal h2 { margin-bottom: 18px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      color: #c5bdb5;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: #101010;
+      color: var(--cream);
+      border: 1px solid #414141;
+      padding: 11px;
+      border-radius: 3px;
+    }
+
+    .field textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 45px;
+      }
+
+      .hero-art { min-height: 190px; }
+
+      .exercise-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .stats { grid-template-columns: repeat(2, 1fr); }
+
+      h1 { letter-spacing: -3px; }
+    }
+
+    @media (max-width: 500px) {
+      .exercise-grid { grid-template-columns: 1fr; }
+      .topbar { padding: 14px 5%; }
+      .year { font-size: 10px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+
+      .section-heading {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="brand">DEVIL<span>HUNTER</span> // PORTFÓLIO</div>
+    <div class="year">ANO LETIVO • 2027</div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Arquivo escolar • 2027</div>
+
+        <h1>Meu <span>Portfólio</span></h1>
+
+        <p>
+          Cada atividade é mais uma missão concluída. Organize seus exercícios,
+          acompanhe as correções do professor e registre sua evolução ao longo do ano.
+        </p>
+
+        <button class="btn" id="openAddTop">+ Adicionar exercício</button>
+      </div>
+
+      <div class="hero-art" aria-label="Arte tipográfica inspirada em Chainsaw Man">
+        <div class="chainsaw-mark">チェンソー</div>
+        <small>START YOUR MISSION</small>
+      </div>
+    </section>
+
+    <section aria-label="Resumo do portfólio">
+
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Seu progresso</div>
+          <h2>Painel de <span>missões</span></h2>
+        </div>
+
+        <div class="muted">
+          Seus registros ficam salvos neste navegador.
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <strong id="totalCount">0</strong>
+          <span>Exercícios</span>
+        </div>
+
+        <div class="stat">
+          <strong id="pendingCount">0</strong>
+          <span>Pendentes</span>
+        </div>
+
+        <div class="stat">
+          <strong id="correctedCount">0</strong>
+          <span>Corrigidos</span>
+        </div>
+
+        <div class="stat">
+          <strong id="averageGrade">—</strong>
+          <span>Média das notas</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">Registro de atividades</div>
+          <h2>Lista de <span>exercícios</span></h2>
+        </div>
+      </div>
+
+      <div class="toolbar">
+
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Buscar exercício..."
+        >
+
+        <select id="statusFilter" aria-label="Filtrar por status">
+          <option value="all">Todos os status</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Corrigido">Corrigido</option>
+          <option value="Precisa melhorar">Precisa melhorar</option>
+        </select>
+
+        <button class="btn" id="openAdd">+ Novo</button>
+
+      </div>
+
+      <div class="exercise-grid" id="exerciseGrid"></div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    CHAINSAW MAN • PORTFÓLIO ESCOLAR 2027 • CONTINUE EVOLUINDO
+  </footer>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+
+    <section
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+
+      <h2 id="modalTitle">Nova <span>missão</span></h2>
+
+      <form id="exerciseForm">
+
+        <input type="hidden" id="exerciseId">
+
+        <div class="form-grid">
+
+          <div class="field full">
+            <label for="title">Nome do exercício *</label>
+            <input
+              id="title"
+              required
+              maxlength="80"
+              placeholder="Ex.: Atividade de matemática"
+            >
+          </div>
+
+          <div class="field">
+            <label for="subject">Matéria</label>
+            <input
+              id="subject"
+              maxlength="40"
+              placeholder="Ex.: Matemática"
+            >
+          </div>
+
+          <div class="field">
+            <label for="date">Data</label>
+            <input id="date" type="date">
+          </div>
+
+          <div class="field">
+            <label for="status">Status</label>
+            <select id="status">
+              <option>Pendente</option>
+              <option>Corrigido</option>
+              <option>Precisa melhorar</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="grade">Nota (opcional)</label>
+            <input
+              id="grade"
+              type="number"
+              min="0"
+              max="10"
+              step="0.1"
+              placeholder="0 a 10"
+            >
+          </div>
+
+          <div class="field full">
+            <label for="description">Descrição / observações</label>
+            <textarea
+              id="description"
+              maxlength="500"
+              placeholder="Anotações sobre a atividade ou comentários da correção..."
+            ></textarea>
+          </div>
+
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" id="cancelModal">
+            Cancelar
+          </button>
+
+          <button type="submit" class="btn">
+            Salvar exercício
+          </button>
+        </div>
+
+      </form>
+
+    </section>
+
+  </div>
+
+  <script>
+
+    // Os exercícios são guardados no armazenamento local deste navegador.
+
+    const STORAGE_KEY = "chainsaw_portfolio_2027";
+
+    let exercises = loadExercises();
+
+    function loadExercises() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : [];
+      } catch (error) {
+        console.warn("Não foi possível carregar os exercícios.", error);
+        return [];
+      }
+    }
+
+    function saveExercises() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(exercises));
+    }
+
+    const grid = document.getElementById("exerciseGrid");
+    const backdrop = document.getElementById("modalBackdrop");
+    const form = document.getElementById("exerciseForm");
+
+    function escapeHTML(value = "") {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function formatDate(date) {
+      if (!date) return "Data não informada";
+
+      const parts = date.split("-");
+
+      return parts.length === 3
+        ? `${parts[2]}/${parts[1]}/${parts[0]}`
+        : date;
+    }
+
+    function render() {
+
+      const query = document
+        .getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+      const filter = document.getElementById("statusFilter").value;
+
+      const filtered = exercises.filter(item => {
+
+        const matchesText =
+          `${item.title} ${item.subject} ${item.description}`
+            .toLowerCase()
+            .includes(query);
+
+        return matchesText &&
+          (filter === "all" || item.status === filter);
+
+      });
+
+      document.getElementById("totalCount").textContent =
+        exercises.length;
+
+      document.getElementById("pendingCount").textContent =
+        exercises.filter(item => item.status === "Pendente").length;
+
+      document.getElementById("correctedCount").textContent =
+        exercises.filter(item => item.status === "Corrigido").length;
+
+      const grades = exercises
+        .map(item => item.grade)
+        .filter(value =>
+          value !== "" &&
+          value !== null &&
+          Number.isFinite(Number(value))
+        )
+        .map(Number);
+
+      document.getElementById("averageGrade").textContent =
+        grades.length
+          ? (grades.reduce((sum, grade) => sum + grade, 0) / grades.length)
+              .toFixed(1)
+              .replace(".", ",")
+          : "—";
+
+      if (!filtered.length) {
+
+        grid.innerHTML = `<div class="empty">${
+          exercises.length
+            ? "Nenhum exercício encontrado com esse filtro."
+            : "Nenhum exercício cadastrado ainda. Clique em “+ Novo” para começar!"
+        }</div>`;
+
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+
+        const statusClass =
+          item.status === "Corrigido"
+            ? "corrected"
+            : item.status === "Precisa melhorar"
+              ? "improve"
+              : "";
+
+        const gradeText =
+          item.grade !== "" && item.grade !== null
+            ? ` • Nota: ${escapeHTML(item.grade)}`
+            : "";
+
+        return `
+          <article class="exercise">
+
+            <div class="exercise-top">
+              <div>
+                <h3>${escapeHTML(item.title)}</h3>
+              </div>
+
+              <span class="status ${statusClass}">
+                ${escapeHTML(item.status)}
+              </span>
+            </div>
+
+            <p>
+              ${escapeHTML(item.description || "Sem descrição ou observações.")}
+            </p>
+
+            <div class="meta">
+              ${escapeHTML(item.subject || "Matéria não informada")}
+              • ${formatDate(item.date)}
+              ${gradeText}
+            </div>
+
+            <div class="exercise-actions">
+              <button
+                class="mini-btn"
+                data-action="edit"
+                data-id="${item.id}"
+              >
+                Editar
+              </button>
+
+              <button
+                class="mini-btn"
+                data-action="delete"
+                data-id="${item.id}"
+              >
+                Excluir
+              </button>
+            </div>
+
+          </article>
+        `;
+
+      }).join("");
+
+    }
+
+    function openModal(item = null) {
+
+      form.reset();
+
+      document.getElementById("exerciseId").value =
+        item ? item.id : "";
+
+      document.getElementById("modalTitle").innerHTML =
+        item
+          ? 'Editar <span>missão</span>'
+          : 'Nova <span>missão</span>';
+
+      if (item) {
+
+        document.getElementById("title").value = item.title || "";
+        document.getElementById("subject").value = item.subject || "";
+        document.getElementById("date").value = item.date || "";
+        document.getElementById("status").value =
+          item.status || "Pendente";
+
+        document.getElementById("grade").value =
+          item.grade ?? "";
+
+        document.getElementById("description").value =
+          item.description || "";
+
+      } else {
+
+        document.getElementById("date").value =
+          new Date().toISOString().slice(0, 10);
+
+      }
+
+      backdrop.classList.add("open");
+
+      document.getElementById("title").focus();
+
+    }
+
+    function closeModal() {
+      backdrop.classList.remove("open");
+    }
+
+    document.getElementById("openAdd")
+      .addEventListener("click", () => openModal());
+
+    document.getElementById("openAddTop")
+      .addEventListener("click", () => openModal());
+
+    document.getElementById("cancelModal")
+      .addEventListener("click", closeModal);
+
+    backdrop.addEventListener("click", event => {
+      if (event.target === backdrop) closeModal();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeModal();
+    });
+
+    form.addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      const id = document.getElementById("exerciseId").value;
+      const grade = document.getElementById("grade").value;
+
+      const item = {
+
+        id: id || (
+          crypto.randomUUID
+            ? crypto.randomUUID()
+            : String(Date.now())
+        ),
+
+        title: document.getElementById("title").value.trim(),
+
+        subject: document.getElementById("subject").value.trim(),
+
+        date: document.getElementById("date").value,
+
+        status: document.getElementById("status").value,
+
+        grade: grade === "" ? "" : Number(grade),
+
+        description: document.getElementById("description").value.trim()
+
+      };
+
+      if (item.grade !== "" &&
+          (item.grade < 0 || item.grade > 10)) {
+
+        alert("A nota deve estar entre 0 e 10.");
+        return;
+
+      }
+
+      if (id) {
+
+        exercises = exercises.map(oldItem =>
+          oldItem.id === id ? item : oldItem
+        );
+
+      } else {
+
+        exercises.unshift(item);
+
+      }
+
+      saveExercises();
+
+      render();
+
+      closeModal();
+
+    });
+
+    grid.addEventListener("click", event => {
+
+      const button = event.target.closest("button[data-action]");
+
+      if (!button) return;
+
+      const item = exercises.find(entry =>
+        entry.id === button.dataset.id
+      );
+
+      if (!item) return;
+
+      if (button.dataset.action === "edit") {
+
+        openModal(item);
+
+      } else if (button.dataset.action === "delete") {
+
+        if (confirm(`Excluir o exercício "${item.title}"?`)) {
+
+          exercises = exercises.filter(entry =>
+            entry.id !== item.id
+          );
+
+          saveExercises();
+
+          render();
+
+        }
+
+      }
+
+    });
+
+    document.getElementById("searchInput")
+      .addEventListener("input", render);
+
+    document.getElementById("statusFilter")
+      .addEventListener("change", render);
+
+    render();
+
+  </script>
+
+</body>
+</html>
