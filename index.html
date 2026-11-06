@@ -501,11 +501,11 @@
       <div class="section-heading">
         <div>
           <div class="eyebrow">Seu progresso</div>
-          <h2>Painel de <span>missões</span></h2>
+          ## Painel de <span>missões</span>
         </div>
 
         <div class="muted">
-          Seus registros ficam salvos neste navegador.
+          Projetos integrados no próprio código fonte.
         </div>
       </div>
 
@@ -537,7 +537,7 @@
       <div class="section-heading">
         <div>
           <div class="eyebrow">Registro de atividades</div>
-          <h2>Lista de <span>exercícios</span></h2>
+          ## Lista de <span>exercícios</span>
         </div>
       </div>
 
@@ -670,8 +670,29 @@
   </div>
 
   <script>
-
-    // Os exercícios são guardados no armazenamento local deste navegador.
+    // ADICIONE SEUS PROJETOS FIXOS NESTA LISTA PARA FICAREM SALVOS EM QUALQUER COMPUTADOR:
+    const initialExercises = [
+      {
+        id: "1",
+        title: "Cadastro cliente",
+        subject: "Matemática",
+        date: "2027-02-10",
+        status: "Pendente",
+        grade: 10,
+        description: "",
+        link: "https://geremymarin-rgb.github.io/Cadastrar-Cliente/index-1.html"
+      },
+      {
+        id: "2",
+        title: "Página de Biologia",
+        subject: "Biologia",
+        date: "2027-02-15",
+        status: "Pendente",
+        grade: "",
+        description: "Pesquisa interativa sobre células.",
+        link: "https://seuusuario.github.io/biologia"
+      }
+    ];
 
     const STORAGE_KEY = "chainsaw_portfolio_2027";
 
@@ -680,10 +701,14 @@
     function loadExercises() {
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : [];
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return parsed.length > 0 ? parsed : initialExercises;
+        }
+        return initialExercises;
       } catch (error) {
         console.warn("Não foi possível carregar os exercícios.", error);
-        return [];
+        return initialExercises;
       }
     }
 
