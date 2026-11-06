@@ -328,6 +328,30 @@
 
     .mini-btn:hover { background: #444; }
 
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: var(--red);
+      color: #fff;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      border-radius: 3px;
+      transition: .2s;
+      width: fit-content;
+    }
+
+    .project-link:hover {
+      background: #f02a32;
+      transform: translateY(-1px);
+    }
+
     .empty {
       grid-column: 1 / -1;
       padding: 38px 20px;
@@ -609,6 +633,16 @@
           </div>
 
           <div class="field full">
+            <label for="projectLink">Link do projeto (GitHub Pages, por exemplo)</label>
+            <input
+              id="projectLink"
+              type="url"
+              maxlength="500"
+              placeholder="https://seuusuario.github.io/seu-projeto/"
+            >
+          </div>
+
+          <div class="field full">
             <label for="description">Descrição / observações</label>
             <textarea
               id="description"
@@ -774,6 +808,15 @@
               ${gradeText}
             </div>
 
+            ${item.link ? `
+              <a
+                class="project-link"
+                href="${escapeHTML(item.link)}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >↗ Abrir projeto</a>
+            ` : ""}
+
             <div class="exercise-actions">
               <button
                 class="mini-btn"
@@ -824,6 +867,9 @@
 
         document.getElementById("description").value =
           item.description || "";
+
+        document.getElementById("projectLink").value =
+          item.link || "";
 
       } else {
 
@@ -884,7 +930,9 @@
 
         grade: grade === "" ? "" : Number(grade),
 
-        description: document.getElementById("description").value.trim()
+        description: document.getElementById("description").value.trim(),
+
+        link: document.getElementById("projectLink").value.trim()
 
       };
 
@@ -894,6 +942,18 @@
         alert("A nota deve estar entre 0 e 10.");
         return;
 
+      }
+
+      if (item.link) {
+        try {
+          const projectURL = new URL(item.link);
+          if (projectURL.protocol !== "http:" && projectURL.protocol !== "https:") {
+            throw new Error("Protocolo inválido");
+          }
+        } catch (error) {
+          alert("Coloque um link válido começando com https:// ou http://");
+          return;
+        }
       }
 
       if (id) {
